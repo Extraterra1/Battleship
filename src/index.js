@@ -1,3 +1,4 @@
+import Ship from './modules/Ship';
 import './style.css';
 
 const buildBoardGrid = (parent) => {
@@ -13,3 +14,10 @@ const cpuGrid = document.querySelector('.cpu-grid .board-grid');
 
 buildBoardGrid(userGrid);
 buildBoardGrid(cpuGrid);
+
+const ship = new Ship(2);
+console.log(ship.length);
+console.log(`ship is${ship.isSunk ? '' : 'not'} sunk`);
+ship.hit();
+ship.hit();
+console.log(`ship is${ship.isSunk ? '' : 'not'} sunk`);
