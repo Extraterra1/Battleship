@@ -89,6 +89,19 @@ main {
   padding: 4rem;
 }
 
+.cpu-grid .grid-item {
+  cursor: pointer;
+}
+
 .grid-item {
   border: 1px solid var(--bs-dark);
+  border-right: none;
+  border-top: none;
+}
+
+.grid-item:nth-child(-n + 10) {
+  border-top: 1px solid var(--bs-dark);
+}
+.grid-item:nth-child(10n) {
+  border-right: 1px solid var(--bs-dark);
 }
