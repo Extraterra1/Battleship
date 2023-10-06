@@ -20,5 +20,8 @@ const gameboard = new Gameboard();
 const ship = new Ship(2);
 
 gameboard.addShip(ship, [0, 0]);
+gameboard.receiveAttack([0, 0]);
+gameboard.receiveAttack([1, 0]);
 
 console.log(gameboard.board);
+console.log(gameboard.ships);

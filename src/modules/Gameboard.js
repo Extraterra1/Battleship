@@ -6,11 +6,18 @@ export default class Gameboard {
 
   addShip(ship, coords) {
     const [x, y] = coords;
-    const shipLocations = [];
+    this.ships.push(ship);
     for (let i = x; i < ship.length + x; i++) {
       this.board[i][y] = { ...this.board[i][y], ship };
-      shipLocations.push([i, y]);
     }
-    this.ships.push({ ...ship, shipLocations });
+  }
+
+  receiveAttack(coords) {
+    const [x, y] = coords;
+    const cell = this.board[x][y];
+
+    if (cell.ship) cell.ship.hit();
+    if (cell.ship.isSunk()) console.log('ship has been sunk!');
+    this.board[x][y] = { ...cell, hasBeenHit: true };
   }
 }
