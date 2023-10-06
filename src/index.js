@@ -1,4 +1,5 @@
 import Ship from './modules/Ship';
+import Gameboard from './modules/Gameboard';
 import './style.css';
 
 const buildBoardGrid = (parent) => {
@@ -15,9 +16,9 @@ const cpuGrid = document.querySelector('.cpu-grid .board-grid');
 buildBoardGrid(userGrid);
 buildBoardGrid(cpuGrid);
 
+const gameboard = new Gameboard();
 const ship = new Ship(2);
-console.log(ship.length);
-console.log(`ship is${ship.isSunk ? '' : 'not'} sunk`);
-ship.hit();
-ship.hit();
-console.log(`ship is${ship.isSunk ? '' : 'not'} sunk`);
+
+gameboard.addShip(ship, [0, 0]);
+
+console.log(gameboard.board);
