@@ -15,6 +15,8 @@ export default class Gameboard {
 
     ship.positions = positions;
     this.ships.push(ship);
+
+    return ship;
   }
 
   receiveAttack(coords) {
@@ -30,6 +32,7 @@ export default class Gameboard {
     }
 
     this.board[x][y] = { ...cell, hasBeenHit: true };
+    console.log(Gameboard.isThereAWinner(this.ships));
     return message;
   }
 
@@ -59,5 +62,9 @@ export default class Gameboard {
       .includes(true);
 
     return isThereAShip ? [] : positions;
+  }
+
+  static isThereAWinner(ships) {
+    return ships.map((ship) => ship.sunk).every((e) => !!e);
   }
 }
