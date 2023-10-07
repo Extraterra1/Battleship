@@ -17,9 +17,10 @@ buildBoardGrid(userGrid);
 buildBoardGrid(cpuGrid);
 
 const gameboard = new Gameboard();
-const ship = new Ship(2);
+// const ship = new Ship(2);
 
-gameboard.addShip(ship, [0, 0], true);
+// gameboard.addShip(ship, [0, 0], true);
+gameboard.generateShips();
 
 console.log(gameboard.receiveAttack([0, 0]));
 console.log(gameboard.receiveAttack([1, 0]));
@@ -27,6 +28,10 @@ console.log(gameboard.receiveAttack([1, 1]));
 console.log(gameboard.receiveAttack([0, 1]));
 console.log(gameboard.receiveAttack([3, 0]));
 console.log(gameboard.receiveAttack([9, 9]));
+console.log(gameboard.receiveAttack([7, 9]));
+console.log(gameboard.receiveAttack([8, 9]));
+console.log(gameboard.receiveAttack([5, 9]));
+console.log(gameboard.receiveAttack([3, 9]));
 
 console.log(gameboard.board);
 console.log(gameboard.ships);
