@@ -5,21 +5,13 @@ export default class Gameboard {
   }
 
   addShip(ship, coords, horizontal) {
-    const [x, y] = coords;
-    const positions = [];
+    const positions = Gameboard.getShipPositions(ship, coords, horizontal, this);
+    if (positions.length === 0) throw new Error('ship position invalid');
 
-    if (!horizontal) {
-      for (let i = x; i < ship.length + x; i++) {
-        this.board[i][y] = { ...this.board[i][y], ship };
-        positions.push([i, y]);
-      }
-    }
-    if (horizontal) {
-      for (let i = y; i < ship.length + x; i++) {
-        this.board[x][i] = { ...this.board[x][i], ship };
-        positions.push([x, i]);
-      }
-    }
+    positions.forEach((coords) => {
+      const [x, y] = coords;
+      this.board[x][y] = { ...this.board[x][y], ship };
+    });
 
     ship.positions = positions;
     this.ships.push(ship);
@@ -44,5 +36,28 @@ export default class Gameboard {
   static isValidMove(coords, instance) {
     const [x, y] = coords;
     return x >= 0 && x <= 9 && y >= 0 && y <= 9 && !instance.board[x][y].hasBeenHit;
+  }
+
+  static getShipPositions(ship, coords, horizontal, instance) {
+    const [x, y] = coords;
+    const positions = [];
+    if (!horizontal) {
+      for (let i = x; i < ship.length + x; i++) {
+        positions.push([i, y]);
+      }
+    }
+    if (horizontal) {
+      for (let i = y; i < ship.length + x; i++) {
+        positions.push([x, i]);
+      }
+    }
+    const isThereAShip = positions
+      .map((e) => {
+        const [x, y] = e;
+        return !!instance.board[x][y].ship;
+      })
+      .includes(true);
+
+    return isThereAShip ? [] : positions;
   }
 }
