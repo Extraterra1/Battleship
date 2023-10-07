@@ -4,13 +4,21 @@ export default class Gameboard {
     this.ships = [];
   }
 
-  addShip(ship, coords) {
+  addShip(ship, coords, horizontal) {
     const [x, y] = coords;
     const positions = [];
 
-    for (let i = x; i < ship.length + x; i++) {
-      this.board[i][y] = { ...this.board[i][y], ship };
-      positions.push([i, y]);
+    if (!horizontal) {
+      for (let i = x; i < ship.length + x; i++) {
+        this.board[i][y] = { ...this.board[i][y], ship };
+        positions.push([i, y]);
+      }
+    }
+    if (horizontal) {
+      for (let i = y; i < ship.length + x; i++) {
+        this.board[x][i] = { ...this.board[x][i], ship };
+        positions.push([x, i]);
+      }
     }
 
     ship.positions = positions;
@@ -18,7 +26,7 @@ export default class Gameboard {
   }
 
   receiveAttack(coords) {
-    if (!this.isValidMove(coords)) throw new Error('Invalid Move');
+    if (!Gameboard.isValidMove(coords, this)) throw new Error('Invalid Move');
     const [x, y] = coords;
     const cell = this.board[x][y];
     let message = `attacked [${x},${y}]`;
@@ -33,8 +41,8 @@ export default class Gameboard {
     return message;
   }
 
-  isValidMove(coords) {
+  static isValidMove(coords, instance) {
     const [x, y] = coords;
-    return x >= 0 && x <= 9 && y >= 0 && y <= 9 && !this.board[x][y].hasBeenHit;
+    return x >= 0 && x <= 9 && y >= 0 && y <= 9 && !instance.board[x][y].hasBeenHit;
   }
 }
