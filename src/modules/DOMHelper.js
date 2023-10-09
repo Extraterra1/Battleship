@@ -29,6 +29,8 @@ export default class DOMHelper {
   }
 
   updateGridOnAttack(msg, data) {
-    console.log(data);
+    const [, x, y] = data.match(/\[(\d+),(\d+)\]/);
+    const gridCell = document.querySelector(`.cpu-grid .grid-item[data-coords='${x},${y}']`);
+    gridCell.classList.add('hit');
   }
 }
