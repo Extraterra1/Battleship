@@ -108,6 +108,10 @@ main {
   background-color: var(--bs-danger);
 }
 
+.grid-item.ship {
+  background-color: var(--bs-info);
+}
+
 .grid-item:nth-child(-n + 10) {
   border-top: 1px solid var(--bs-dark);
 }

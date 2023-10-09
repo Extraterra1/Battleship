@@ -41,4 +41,13 @@ export default class DOMHelper {
     const gridCell = document.querySelector(`${gridToUpdate} .grid-item[data-coords='${x},${y}']`);
     gridCell.classList.add('hit');
   }
+
+  displayUserShips(ships) {
+    const positions = ships.map((e) => e.positions).flat();
+    positions.forEach((coords) => {
+      const [x, y] = coords;
+      const gridCell = document.querySelector(`.user-grid .grid-item[data-coords='${x},${y}']`);
+      gridCell.classList.add('ship');
+    });
+  }
 }

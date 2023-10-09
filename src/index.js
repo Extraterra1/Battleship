@@ -19,6 +19,7 @@ const cpuGrid = document.querySelector('.cpu-grid .board-grid');
 
 helper.buildBoardGrid(userGrid);
 helper.buildBoardGrid(cpuGrid);
+helper.displayUserShips(player1.board.ships);
 
 // console.log(gameboard.receiveAttack([0, 0]));
 // console.log(gameboard.receiveAttack([1, 0]));
