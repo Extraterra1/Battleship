@@ -51,6 +51,7 @@ export default class Gameboard {
     }
 
     this.board[x][y] = { ...cell, hasBeenHit: true };
+
     return message;
   }
 
@@ -84,7 +85,7 @@ export default class Gameboard {
     return isThereAShip ? [] : positions;
   }
 
-  static isThereAWinner(ships) {
-    return ships.map((ship) => ship.sunk).every((e) => !!e);
+  checkWinner() {
+    return this.ships.map((ship) => ship.sunk).every((e) => !!e);
   }
 }

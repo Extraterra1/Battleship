@@ -7,7 +7,10 @@ export default class Player {
     if (this.name === 'Player 2') {
       PubSub.subscribe('cellClicked', (msg, data) => {
         const attack = this.board.receiveAttack(data);
-        if (attack.includes('ship')) PubSub.publish('attackReceived', { coords: data, msg: attack, player: this.name });
+        if (attack.includes('ship')) {
+          PubSub.publish('attackReceived', { coords: data, msg: attack, player: this.name });
+          if (this.board.checkWinner()) PubSub.publish('winner', this.name);
+        }
 
         // wait half a second and do a random attack
         setTimeout(this.randomAttack.bind(this), 500);
@@ -16,7 +19,9 @@ export default class Player {
     if (this.name === 'Player 1') {
       PubSub.subscribe('cpuAttack', (msg, data) => {
         const attack = this.board.receiveAttack(data);
+
         PubSub.publish('CPUAttackReceived', { coords: data, msg: attack, player: this.name });
+        if (this.board.checkWinner()) PubSub.publish('winner', this.name);
       });
     }
   }

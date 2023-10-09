@@ -1,9 +1,11 @@
 import PubSub from 'pubsub-js';
+import Swal from 'sweetalert2';
 
 export default class DOMHelper {
   constructor() {
     PubSub.subscribe('attackReceived', this.updateGridOnAttack);
     PubSub.subscribe('CPUAttackReceived', this.updateGridOnAttack);
+    PubSub.subscribe('winner', this.declareWinner);
   }
 
   buildBoardGrid(parent) {
@@ -40,6 +42,27 @@ export default class DOMHelper {
 
     const gridCell = document.querySelector(`${gridToUpdate} .grid-item[data-coords='${x},${y}']`);
     gridCell.classList.add('hit');
+
+    if (data.msg.includes('sunk') && data.player === 'Player 2')
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        icon: 'success',
+        title: 'You have sunk a ship!!'
+      });
+    if (data.msg.includes('sunk') && data.player === 'Player 1')
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        icon: 'error',
+        title: 'One of your ships has been sunk 😟'
+      });
   }
 
   displayUserShips(ships) {
@@ -48,6 +71,30 @@ export default class DOMHelper {
       const [x, y] = coords;
       const gridCell = document.querySelector(`.user-grid .grid-item[data-coords='${x},${y}']`);
       gridCell.classList.add('ship');
+    });
+  }
+
+  declareWinner(msg, data) {
+    const loser = data;
+    const winner = loser === 'Player 2' ? 'Player 1' : 'CPU';
+    Swal.fire({
+      imageUrl: 'https://static.vecteezy.com/system/resources/previews/014/475/134/original/golden-yellow-trophy-icon-for-the-winner-of-a-sports-event-png.png',
+      imageHeight: '30rem',
+      imageWidth: 'auto',
+      title: 'We have a winner!!',
+      text: `${winner} wins!`,
+      confirmButtonText: 'Play Again',
+      allowOutsideClick: false,
+      customClass: {
+        title: 'swal-title',
+        htmlContainer: 'swal-text',
+        confirmButton: 'swal-button'
+      },
+      width: '30vw'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        PubSub.publish('reset');
+      }
     });
   }
 }
