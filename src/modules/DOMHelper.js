@@ -97,4 +97,15 @@ export default class DOMHelper {
       }
     });
   }
+
+  resetGrids() {
+    const userGrid = document.querySelector('.user-grid .board-grid');
+    const cpuGrid = document.querySelector('.cpu-grid .board-grid');
+
+    userGrid.innerHTML = '';
+    cpuGrid.innerHTML = '';
+
+    this.buildBoardGrid(userGrid);
+    this.buildBoardGrid(cpuGrid);
+  }
 }

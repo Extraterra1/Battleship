@@ -88,4 +88,10 @@ export default class Gameboard {
   checkWinner() {
     return this.ships.map((ship) => ship.sunk).every((e) => !!e);
   }
+
+  reset() {
+    this.board = new Array(10).fill(0).map((el) => new Array(10).fill({ hasBeenHit: false, ship: null }));
+    this.ships = [];
+    this.generateShips();
+  }
 }

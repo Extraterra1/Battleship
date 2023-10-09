@@ -18,4 +18,12 @@ helper.buildBoardGrid(userGrid);
 helper.buildBoardGrid(cpuGrid);
 helper.displayUserShips(player1.board.ships);
 
-PubSub.subscribe('reset', () => {});
+PubSub.subscribe('reset', () => {
+  player1.reset();
+  player1.board.reset();
+  player2.reset();
+  player2.board.reset();
+
+  helper.resetGrids();
+  helper.displayUserShips(player1.board.ships);
+});

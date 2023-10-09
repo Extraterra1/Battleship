@@ -33,7 +33,10 @@ export default class Player {
       const [eX, eY] = e;
       return eX !== x || eY !== y;
     });
-    console.log('cpu attacks' + coords);
     PubSub.publish('cpuAttack', coords);
+  }
+
+  reset() {
+    this.possibleAttacks = [...Array(10)].flatMap((_, x) => [...Array(10)].map((_, y) => [x, y]));
   }
 }
