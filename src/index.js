@@ -1,33 +1,15 @@
 import Ship from './modules/Ship';
 import Gameboard from './modules/Gameboard';
+import DOMHelper from './modules/DOMHelper';
 import './style.css';
-
-const buildBoardGrid = (parent) => {
-  let row = 0;
-  let column = 0;
-  for (let i = 0; i < 100; i++) {
-    const elementToAppend = document.createElement('div');
-    elementToAppend.classList.add('grid-item');
-    elementToAppend.setAttribute('data-coords', `${row},${column}`);
-    parent.append(elementToAppend);
-
-    if (++column === 10) {
-      row++;
-      column = 0;
-    }
-  }
-};
 
 const userGrid = document.querySelector('.user-grid .board-grid');
 const cpuGrid = document.querySelector('.cpu-grid .board-grid');
 
-buildBoardGrid(userGrid);
-buildBoardGrid(cpuGrid);
+DOMHelper.buildBoardGrid(userGrid);
+DOMHelper.buildBoardGrid(cpuGrid);
 
 const gameboard = new Gameboard();
-// const ship = new Ship(2);
-
-// gameboard.addShip(ship, [0, 0], true);
 gameboard.generateShips();
 
 console.log(gameboard.receiveAttack([0, 0]));
