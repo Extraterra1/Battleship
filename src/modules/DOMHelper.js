@@ -3,6 +3,7 @@ import PubSub from 'pubsub-js';
 export default class DOMHelper {
   constructor() {
     PubSub.subscribe('attackReceived', this.updateGridOnAttack);
+    PubSub.subscribe('CPUAttackReceived', this.updateGridOnAttack);
   }
 
   buildBoardGrid(parent) {
@@ -29,8 +30,15 @@ export default class DOMHelper {
   }
 
   updateGridOnAttack(msg, data) {
-    const [, x, y] = data.match(/\[(\d+),(\d+)\]/);
-    const gridCell = document.querySelector(`.cpu-grid .grid-item[data-coords='${x},${y}']`);
+    const [x, y] = data.coords;
+    if (data.player === 'Player 1') {
+      const gridCell = document.querySelector(`.user-grid .grid-item[data-coords='${x},${y}']`);
+      gridCell.classList.add('clicked');
+      if (!data.msg.includes('ship')) return;
+    }
+    const gridToUpdate = data.player === 'Player 2' ? '.cpu-grid' : '.user-grid';
+
+    const gridCell = document.querySelector(`${gridToUpdate} .grid-item[data-coords='${x},${y}']`);
     gridCell.classList.add('hit');
   }
 }
