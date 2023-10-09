@@ -1,6 +1,10 @@
 import PubSub from 'pubsub-js';
 
-export default {
+export default class DOMHelper {
+  constructor() {
+    PubSub.subscribe('attackReceived', this.updateGridOnAttack);
+  }
+
   buildBoardGrid(parent) {
     let row = 0;
     let column = 0;
@@ -16,10 +20,15 @@ export default {
         column = 0;
       }
     }
-  },
+  }
+
   handleClick(e) {
     const [x, y] = this.dataset.coords.split(',');
     this.classList.add('clicked');
     PubSub.publish('cellClicked', [x, y]);
   }
-};
+
+  updateGridOnAttack(msg, data) {
+    console.log(data);
+  }
+}

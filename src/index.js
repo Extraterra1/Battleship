@@ -3,11 +3,13 @@ import Gameboard from './modules/Gameboard';
 import DOMHelper from './modules/DOMHelper';
 import './style.css';
 
+const helper = new DOMHelper();
+
 const userGrid = document.querySelector('.user-grid .board-grid');
 const cpuGrid = document.querySelector('.cpu-grid .board-grid');
 
-DOMHelper.buildBoardGrid(userGrid);
-DOMHelper.buildBoardGrid(cpuGrid);
+helper.buildBoardGrid(userGrid);
+helper.buildBoardGrid(cpuGrid);
 
 const gameboard = new Gameboard();
 gameboard.generateShips();
