@@ -99,6 +99,15 @@ main {
   border-top: none;
 }
 
+.grid-item.clicked {
+  cursor: auto;
+  background-color: var(--bs-secondary);
+}
+
+.grid-item.clicked.hit {
+  background-color: var(--bs-danger);
+}
+
 .grid-item:nth-child(-n + 10) {
   border-top: 1px solid var(--bs-dark);
 }

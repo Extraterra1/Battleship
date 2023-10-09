@@ -1,4 +1,4 @@
-import Ship from './modules/Ship';
+// import Ship from './modules/Ship';
 import Gameboard from './modules/Gameboard';
 import DOMHelper from './modules/DOMHelper';
 import './style.css';

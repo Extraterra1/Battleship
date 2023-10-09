@@ -1,3 +1,5 @@
+import PubSub from 'pubsub-js';
+
 export default {
   buildBoardGrid(parent) {
     let row = 0;
@@ -6,6 +8,7 @@ export default {
       const elementToAppend = document.createElement('div');
       elementToAppend.classList.add('grid-item');
       elementToAppend.setAttribute('data-coords', `${row},${column}`);
+      elementToAppend.addEventListener('click', this.handleClick, { once: true });
       parent.append(elementToAppend);
 
       if (++column === 10) {
@@ -15,6 +18,8 @@ export default {
     }
   },
   handleClick(e) {
-    console.log(this);
+    const [x, y] = this.dataset.coords.split(',');
+    this.classList.add('clicked');
+    PubSub.publish('cellClicked', [x, y]);
   }
 };
